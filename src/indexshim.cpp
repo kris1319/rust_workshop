@@ -25,3 +25,10 @@ rust::Vec<IndexResult> search_index_with_positions(const Index& index, rust::Str
     }
     return rust_results;
 }
+
+// void store() {
+//     auto executor = get_executor();
+//     Storage storage;
+
+//     storage.store("doc1", "This is a sample document.").via(executor.get()).wait();
+// }

@@ -2,10 +2,16 @@ fn main() {
     cxx_build::bridge("src/main.rs")
         .file("src/indexshim.cpp")
         .include("/opt/homebrew/include")
+        // These includes are to use in devcontainer
+        .include("/devcontainer/folly-include")
+        .include("/devcontainer/fmt-include")
         .std("c++17")
         .compile("rust_cxx");
 
     println!("cargo:rustc-link-search=native=/opt/homebrew/lib");
+    // These imports are to use in devcontainer
+    println!("cargo:rustc-link-search=native=/devcontainer/folly-lib");
+    println!("cargo:rustc-link-search=native=/devcontainer/fmt-lib");
 
     // println!("cargo:rustc-link-lib=static=folly");
 
@@ -19,6 +25,9 @@ fn main() {
     // println!("cargo:rustc-link-lib=static=snappy");
     // println!("cargo:rustc-link-lib=static=event_pthreads");
     // println!("cargo:rustc-link-lib=static=boost_context");
+    // println!("cargo:rustc-link-lib=static=boost_program_options");
+    // // For devcontainer: use dynamic linking to unwind
+    // println!("cargo:rustc-link-lib=dylib=unwind");
 
     println!("cargo:rerun-if-changed=include/index.h");
     println!("cargo:rerun-if-changed=include/indexshim.h");
